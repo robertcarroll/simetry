@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-typedef int32_t r3e_int32;
+typedef int32_t uint_least32_t;
 typedef float r3e_float32;
 typedef double r3e_float64;
 typedef uint8_t r3e_u8char; // UTF-8 code unit

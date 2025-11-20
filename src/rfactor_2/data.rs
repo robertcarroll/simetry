@@ -7,11 +7,12 @@ use crate::rfactor_2::shared_memory_data::{
 };
 use crate::windows_util::cp1252_to_string;
 use anyhow::{bail, Error, Result};
+use serde::{Deserialize, Serialize};
 
-#[derive(Copy, Clone, Debug, Hash, Ord, PartialOrd, Eq, PartialEq)]
+#[derive(Copy, Clone, Debug, Hash, Ord, PartialOrd, Eq, PartialEq, Serialize, Deserialize)]
 pub struct PacketId(pub u32);
 
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug, Default, Serialize, Deserialize)]
 pub struct Vec3 {
     pub x: f64,
     pub y: f64,
@@ -24,19 +25,19 @@ impl Vec3 {
     }
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct ForceFeedback {
     /// Current FFB value
     pub force_value: f64,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Telemetry {
     pub packet_id: PacketId,
     pub vehicles: Vec<VehicleTelemetry>,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct VehicleTelemetry {
     // Time
     /// slot ID (note that it can be re-used in multiplayer after someone leaves)    
@@ -196,7 +197,7 @@ pub struct VehicleTelemetry {
     pub wheels: [WheelTelemetry; 4],
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct WheelTelemetry {
     /// meters
     pub suspension_deflection: f64,
@@ -260,7 +261,7 @@ pub struct WheelTelemetry {
     pub tire_inner_layer_temperature: [f64; 3],
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Scoring {
     pub packet_id: PacketId,
 
@@ -269,7 +270,7 @@ pub struct Scoring {
     pub vehicles: Vec<VehicleScoring>,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct ScoringInfo {
     /// current track name
     pub track_name: String,
@@ -339,7 +340,7 @@ pub struct ScoringInfo {
     pub avg_path_wetness: f64,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct VehicleScoring {
     /// slot ID (note that it can be re-used in multiplayer after someone leaves)
     pub id: i32,
@@ -461,7 +462,7 @@ pub struct VehicleScoring {
     pub best_lap_sector2: f32,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Rules {
     pub packet_id: PacketId,
 
@@ -470,7 +471,7 @@ pub struct Rules {
     pub participants: Vec<TrackRulesParticipant>,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct TrackRulesAction {
     // input only
     /// recommended action
@@ -481,7 +482,7 @@ pub struct TrackRulesAction {
     pub elapsed_time: f64,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct TrackRulesParticipant {
     // input only
     /// slot ID
@@ -514,7 +515,7 @@ pub struct TrackRulesParticipant {
     pub message: String,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct TrackRules {
     // input only
     /// current time
@@ -576,19 +577,19 @@ pub struct TrackRules {
 }
 
 /// Not supported yet.
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct MultiRules {
     pub packet_id: PacketId,
 }
 
 /// Not supported yet.
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct PitInfo {
     pub packet_id: PacketId,
 }
 
 /// Not supported yet.
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Weather {
     pub packet_id: PacketId,
 }
@@ -666,7 +667,7 @@ pub struct Extended {
     pub lsi_rules_instruction_message: String,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct PhysicsOptions {
     /// 0 (off) - 3 (high)
     pub traction_control: u8,
@@ -725,7 +726,7 @@ pub struct PhysicsOptions {
     pub steer_ratio_speed: f32,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct TrackedDamage {
     /// Max impact magnitude
     ///
@@ -737,7 +738,7 @@ pub struct TrackedDamage {
     pub accumulated_impact_magnitude: f64,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct SessionTransitionCapture {
     pub game_phase: u8,
     pub session: i32,
@@ -745,7 +746,7 @@ pub struct SessionTransitionCapture {
     pub scoring_vehicles: Vec<VehScoringCapture>,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct VehScoringCapture {
     /// slot ID (note that it can be re-used in multiplayer after someone leaves)
     pub id: i32,
